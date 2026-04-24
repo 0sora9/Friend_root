@@ -1,8 +1,34 @@
-# Friend_root
+# Friend Root
 
-DEEPCORExOpenAI Hackathon team3 repository.
+Relationship-map demo for finding the best introduction path to a target person.
 
-## Relationship graph utilities
+## What This Demo Shows
+
+- A relationship map with people, companies, communities, and connection strength.
+- Target detail and edge evidence, updated by clicking nodes or edges.
+- AI-suggested approach strategy using fixed mock suggestions.
+- Dummy LinkedIn/Facebook/Google-style data only. No external API, login, database, or real AI call is used.
+
+## Run Locally
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open `http://localhost:5173/`.
+
+## Build
+
+```bash
+pnpm build
+```
+
+## Mock Data
+
+Demo data is isolated in `src/mockData.ts` so the UI can later be connected to real LinkedIn, Facebook, Google Contacts, Calendar, or Gmail metadata adapters.
+
+## Relationship Graph Utilities
 
 The relationship logic is intentionally framework-independent so UI, API, and database work can reference it from any plan.
 
@@ -36,10 +62,9 @@ const approved = approveRelationshipRequest(pending, "human");
 
 For local demo data, import from `src/lib/relationships.mock.ts`.
 
-## Development
+## Test
 
 ```bash
-npm install
-npm run typecheck
-npm test
+pnpm test
+pnpm typecheck
 ```
