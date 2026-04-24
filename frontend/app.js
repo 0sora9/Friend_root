@@ -391,9 +391,9 @@ function bindEvents() {
 }
 
 function resizeCanvas() {
-  state.width = window.innerWidth;
-  state.height = window.innerHeight;
-  state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  state.width = Math.max(1, safeNumber(window.innerWidth, canvas.clientWidth || 1080));
+  state.height = Math.max(1, safeNumber(window.innerHeight, canvas.clientHeight || 720));
+  state.dpr = clamp(safeNumber(window.devicePixelRatio, 1), 1, 2);
   canvas.width = Math.floor(state.width * state.dpr);
   canvas.height = Math.floor(state.height * state.dpr);
   canvas.style.width = `${state.width}px`;
@@ -405,7 +405,7 @@ function resizeCanvas() {
 function resetView() {
   state.view.x = state.width / 2;
   state.view.y = state.height / 2 + 26;
-  state.view.k = Math.min(1.08, Math.max(0.82, state.width / 1440));
+  state.view.k = defaultViewScale();
   selectNode(null);
 }
 
@@ -426,10 +426,12 @@ function onPointerDown(event) {
 }
 
 function onPointerMove(event) {
+  const previousMouse = { x: state.mouse.x, y: state.mouse.y };
   updateMouse(event);
   if (state.isPanning) {
-    state.view.x += event.movementX;
-    state.view.y += event.movementY;
+    state.view.x += safeNumber(event.movementX, event.clientX - previousMouse.x);
+    state.view.y += safeNumber(event.movementY, event.clientY - previousMouse.y);
+    sanitizeRuntimeState();
     hideTooltip();
     return;
   }
@@ -479,11 +481,12 @@ function onCanvasClick(event) {
 function onWheel(event) {
   event.preventDefault();
   const before = screenToWorld(event.clientX, event.clientY);
-  const scale = Math.exp(-event.deltaY * 0.0012);
+  const scale = Math.exp(-safeNumber(event.deltaY, 0) * 0.0012);
   state.view.k = clamp(state.view.k * scale, 0.42, 2.4);
   const after = worldToScreen(before.x, before.y);
   state.view.x += event.clientX - after.x;
   state.view.y += event.clientY - after.y;
+  sanitizeRuntimeState();
 }
 
 function updateMouse(event) {
@@ -495,16 +498,18 @@ function updateMouse(event) {
 }
 
 function screenToWorld(x, y) {
+  const scale = positiveNumber(state.view.k, defaultViewScale());
   return {
-    x: (x - state.view.x) / state.view.k,
-    y: (y - state.view.y) / state.view.k,
+    x: (safeNumber(x, 0) - safeNumber(state.view.x, state.width / 2)) / scale,
+    y: (safeNumber(y, 0) - safeNumber(state.view.y, state.height / 2)) / scale,
   };
 }
 
 function worldToScreen(x, y) {
+  const scale = positiveNumber(state.view.k, defaultViewScale());
   return {
-    x: x * state.view.k + state.view.x,
-    y: y * state.view.k + state.view.y,
+    x: safeNumber(x, 0) * scale + safeNumber(state.view.x, state.width / 2),
+    y: safeNumber(y, 0) * scale + safeNumber(state.view.y, state.height / 2),
   };
 }
 
@@ -638,6 +643,7 @@ function frame(now) {
 }
 
 function tickSimulation() {
+  sanitizeRuntimeState();
   const time = performance.now();
   for (const edge of graph.edges) {
     const source = edge.sourceNode;
@@ -705,6 +711,7 @@ function tickSimulation() {
 }
 
 function draw(now) {
+  sanitizeRuntimeState();
   if (bootStatus) bootStatus.classList.add("is-hidden");
   ctx.save();
   ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
@@ -720,19 +727,26 @@ function draw(now) {
 }
 
 function drawBackdrop() {
-  const gradient = ctx.createRadialGradient(
-    state.width * 0.5,
-    state.height * 0.48,
+  const width = Math.max(1, safeNumber(state.width, window.innerWidth || 1080));
+  const height = Math.max(1, safeNumber(state.height, window.innerHeight || 720));
+  const gradient = createSafeRadialGradient(
+    width * 0.5,
+    height * 0.48,
     80,
-    state.width * 0.5,
-    state.height * 0.48,
-    Math.max(state.width, state.height) * 0.6,
+    width * 0.5,
+    height * 0.48,
+    Math.max(width, height) * 0.6,
   );
+  if (!gradient) {
+    ctx.fillStyle = "rgba(18, 24, 38, 0.08)";
+    ctx.fillRect(0, 0, width, height);
+    return;
+  }
   gradient.addColorStop(0, "rgba(90, 116, 190, 0.12)");
   gradient.addColorStop(0.5, "rgba(18, 24, 38, 0.08)");
   gradient.addColorStop(1, "rgba(8, 10, 15, 0)");
   ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, state.width, state.height);
+  ctx.fillRect(0, 0, width, height);
 }
 
 function drawEdges(now) {
@@ -807,8 +821,9 @@ function drawNodes() {
     const inContext = isNodeInSelectedContext(node.id);
     const dimmedBySelection = state.selectedNode && !inContext && !inRoute && !selected;
     const alpha = (inRoute || selected ? 1 : hovered ? 0.96 : dimmedBySelection ? 0.15 : active ? 0.82 : 0.12) * intro;
-    const radius = node.radius * (selected ? 1.18 : hovered ? 1.12 : 1) * (0.72 + intro * 0.28);
+    const radius = positiveNumber(node.radius, radiusFor(node)) * (selected ? 1.18 : hovered ? 1.12 : 1) * (0.72 + intro * 0.28);
     const color = CATEGORIES[node.category].color;
+    if (!isFinitePoint(point) || !Number.isFinite(radius)) continue;
 
     if (selected || hovered || inRoute || node.id === "me") {
       ctx.beginPath();
@@ -817,7 +832,7 @@ function drawNodes() {
       ctx.fill();
     }
 
-    const gradient = ctx.createRadialGradient(
+    const gradient = createSafeRadialGradient(
       point.x - radius * 0.32,
       point.y - radius * 0.42,
       radius * 0.15,
@@ -825,12 +840,16 @@ function drawNodes() {
       point.y,
       radius,
     );
-    gradient.addColorStop(0, hexToRgba("#FFFFFF", alpha * 0.72));
-    gradient.addColorStop(0.3, hexToRgba(color, alpha));
-    gradient.addColorStop(1, hexToRgba(color, alpha * 0.58));
 
     ctx.beginPath();
-    ctx.fillStyle = gradient;
+    if (gradient) {
+      gradient.addColorStop(0, hexToRgba("#FFFFFF", alpha * 0.72));
+      gradient.addColorStop(0.3, hexToRgba(color, alpha));
+      gradient.addColorStop(1, hexToRgba(color, alpha * 0.58));
+      ctx.fillStyle = gradient;
+    } else {
+      ctx.fillStyle = hexToRgba(color, alpha);
+    }
     ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
     ctx.fill();
 
@@ -957,6 +976,46 @@ function showTooltip(node, x, y) {
 
 function hideTooltip() {
   tooltip.classList.remove("is-visible");
+}
+
+function sanitizeRuntimeState() {
+  state.width = Math.max(1, safeNumber(state.width, window.innerWidth || canvas.clientWidth || 1080));
+  state.height = Math.max(1, safeNumber(state.height, window.innerHeight || canvas.clientHeight || 720));
+  state.view.k = clamp(positiveNumber(state.view.k, defaultViewScale()), 0.42, 2.4);
+  state.view.x = safeNumber(state.view.x, state.width / 2);
+  state.view.y = safeNumber(state.view.y, state.height / 2 + 26);
+
+  for (const node of graph.nodes) {
+    node.x = safeNumber(node.x, safeNumber(node.targetX, safeNumber(node.anchorX, 0)));
+    node.y = safeNumber(node.y, safeNumber(node.targetY, safeNumber(node.anchorY, 0)));
+    node.vx = safeNumber(node.vx, 0);
+    node.vy = safeNumber(node.vy, 0);
+    node.radius = positiveNumber(node.radius, radiusFor(node));
+    if (node.fx !== undefined) node.fx = safeNumber(node.fx, node.x);
+    if (node.fy !== undefined) node.fy = safeNumber(node.fy, node.y);
+  }
+}
+
+function createSafeRadialGradient(x0, y0, r0, x1, y1, r1) {
+  const values = [x0, y0, r0, x1, y1, r1];
+  if (!values.every(Number.isFinite) || r0 < 0 || r1 <= 0) return null;
+  return ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
+}
+
+function isFinitePoint(point) {
+  return Boolean(point) && Number.isFinite(point.x) && Number.isFinite(point.y);
+}
+
+function safeNumber(value, fallback) {
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function positiveNumber(value, fallback) {
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function defaultViewScale() {
+  return Math.min(1.08, Math.max(0.82, safeNumber(state.width, 1080) / 1440));
 }
 
 function clamp(value, min, max) {
