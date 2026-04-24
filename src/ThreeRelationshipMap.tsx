@@ -30,10 +30,15 @@ const sourceColors: Record<PersonNode["source"], string> = {
 export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const onSelectRef = useRef(onSelect);
+  const selectionRef = useRef(selection);
 
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+
+  useEffect(() => {
+    selectionRef.current = selection;
+  }, [selection]);
 
   useEffect(() => {
     const hostElement = hostRef.current;
@@ -186,7 +191,8 @@ export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
     let raf = 0;
 
     function paintSelection() {
-      const selectedNodeId = selection.kind === "node" ? selection.id : null;
+      const currentSelection = selectionRef.current;
+      const selectedNodeId = currentSelection.kind === "node" ? currentSelection.id : null;
       const directPeople = selectedNodeId ? directByNode.get(selectedNodeId) ?? new Set<string>() : new Set<string>();
       const directEdges = selectedNodeId ? directEdgesByNode.get(selectedNodeId) ?? new Set<string>() : new Set<string>();
 
@@ -232,7 +238,7 @@ export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
       renderer.dispose();
       host.innerHTML = "";
     };
-  }, [graph, selection]);
+  }, [graph]);
 
   return <div className="three-map" ref={hostRef} />;
 }
