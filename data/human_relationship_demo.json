@@ -1,0 +1,713 @@
+{
+  "meta": {
+    "title": "Human Relationship Graph Demo Data",
+    "version": "1.0.0",
+    "description": "ConnectedPapers風の人間関係可視化デモ向けダミーデータ。20人の人物ノードと関係エッジを収録。",
+    "recommendedViews": [
+      "organization cluster",
+      "relationship type filter",
+      "strength heatmap",
+      "timeline by sinceYear"
+    ]
+  },
+  "people": [
+    {
+      "id": "rena_asakura",
+      "name": "朝倉 玲奈",
+      "age": 29,
+      "occupation": "プロダクトマネージャー",
+      "organization": "Northstar Labs",
+      "location": "東京",
+      "tags": [
+        "product",
+        "startup",
+        "community"
+      ],
+      "community": "Tech",
+      "influenceScore": 87
+    },
+    {
+      "id": "yuto_morimoto",
+      "name": "森本 悠斗",
+      "age": 31,
+      "occupation": "機械学習エンジニア",
+      "organization": "Northstar Labs",
+      "location": "東京",
+      "tags": [
+        "ai",
+        "engineering",
+        "research"
+      ],
+      "community": "Tech",
+      "influenceScore": 84
+    },
+    {
+      "id": "mitsuki_shiraishi",
+      "name": "白石 美月",
+      "age": 27,
+      "occupation": "UIデザイナー",
+      "organization": "Northstar Labs",
+      "location": "横浜",
+      "tags": [
+        "design",
+        "branding",
+        "ux"
+      ],
+      "community": "Tech",
+      "influenceScore": 71
+    },
+    {
+      "id": "kei_kuroda",
+      "name": "黒田 圭",
+      "age": 38,
+      "occupation": "エンジェル投資家",
+      "organization": "Kuroda Capital",
+      "location": "東京",
+      "tags": [
+        "investment",
+        "mentoring",
+        "finance"
+      ],
+      "community": "Finance",
+      "influenceScore": 92
+    },
+    {
+      "id": "azusa_saionji",
+      "name": "西園寺 梓",
+      "age": 34,
+      "occupation": "PRコンサルタント",
+      "organization": "Bloom PR",
+      "location": "東京",
+      "tags": [
+        "media",
+        "pr",
+        "events"
+      ],
+      "community": "Media",
+      "influenceScore": 76
+    },
+    {
+      "id": "kaito_tanabe",
+      "name": "田辺 海斗",
+      "age": 33,
+      "occupation": "事業開発責任者",
+      "organization": "Northstar Labs",
+      "location": "大阪",
+      "tags": [
+        "sales",
+        "partnership",
+        "growth"
+      ],
+      "community": "Tech",
+      "influenceScore": 79
+    },
+    {
+      "id": "mao_fujisaki",
+      "name": "藤崎 真央",
+      "age": 26,
+      "occupation": "起業家",
+      "organization": "Loop Works",
+      "location": "福岡",
+      "tags": [
+        "founder",
+        "creator",
+        "startup"
+      ],
+      "community": "Startup",
+      "influenceScore": 74
+    },
+    {
+      "id": "shuji_aoyama",
+      "name": "青山 修司",
+      "age": 41,
+      "occupation": "大学准教授",
+      "organization": "京浜大学",
+      "location": "東京",
+      "tags": [
+        "academia",
+        "network",
+        "research"
+      ],
+      "community": "Academia",
+      "influenceScore": 81
+    },
+    {
+      "id": "hikari_yoshioka",
+      "name": "吉岡 ひかり",
+      "age": 30,
+      "occupation": "データジャーナリスト",
+      "organization": "Daily Scope",
+      "location": "東京",
+      "tags": [
+        "media",
+        "data",
+        "storytelling"
+      ],
+      "community": "Media",
+      "influenceScore": 73
+    },
+    {
+      "id": "ao_takanashi",
+      "name": "高梨 蒼",
+      "age": 28,
+      "occupation": "コミュニティマネージャー",
+      "organization": "Civic Hub",
+      "location": "名古屋",
+      "tags": [
+        "community",
+        "events",
+        "nonprofit"
+      ],
+      "community": "Community",
+      "influenceScore": 68
+    },
+    {
+      "id": "ren_ogasawara",
+      "name": "小笠原 蓮",
+      "age": 36,
+      "occupation": "VCパートナー",
+      "organization": "Seed Frontier",
+      "location": "東京",
+      "tags": [
+        "vc",
+        "investment",
+        "startup"
+      ],
+      "community": "Finance",
+      "influenceScore": 89
+    },
+    {
+      "id": "natsumi_kawamura",
+      "name": "川村 菜摘",
+      "age": 25,
+      "occupation": "ソフトウェアエンジニア",
+      "organization": "Loop Works",
+      "location": "福岡",
+      "tags": [
+        "frontend",
+        "react",
+        "opensource"
+      ],
+      "community": "Startup",
+      "influenceScore": 66
+    },
+    {
+      "id": "naoto_sakakibara",
+      "name": "榊原 直人",
+      "age": 44,
+      "occupation": "人材エージェント",
+      "organization": "Bridge Talent",
+      "location": "東京",
+      "tags": [
+        "recruiting",
+        "career",
+        "connector"
+      ],
+      "community": "Business",
+      "influenceScore": 77
+    },
+    {
+      "id": "kotone_hasegawa",
+      "name": "長谷川 琴音",
+      "age": 32,
+      "occupation": "弁護士",
+      "organization": "Hasegawa Legal",
+      "location": "東京",
+      "tags": [
+        "legal",
+        "compliance",
+        "advisory"
+      ],
+      "community": "Business",
+      "influenceScore": 72
+    },
+    {
+      "id": "ryo_ishido",
+      "name": "石動 遼",
+      "age": 29,
+      "occupation": "映像クリエイター",
+      "organization": "Freelance",
+      "location": "京都",
+      "tags": [
+        "creator",
+        "video",
+        "brand"
+      ],
+      "community": "Creative",
+      "influenceScore": 64
+    },
+    {
+      "id": "yui_ando",
+      "name": "安藤 由依",
+      "age": 35,
+      "occupation": "NPO代表",
+      "organization": "Civic Hub",
+      "location": "名古屋",
+      "tags": [
+        "nonprofit",
+        "education",
+        "social"
+      ],
+      "community": "Community",
+      "influenceScore": 75
+    },
+    {
+      "id": "tomoya_murase",
+      "name": "村瀬 智也",
+      "age": 37,
+      "occupation": "CTO",
+      "organization": "Loop Works",
+      "location": "福岡",
+      "tags": [
+        "cto",
+        "engineering",
+        "saas"
+      ],
+      "community": "Startup",
+      "influenceScore": 82
+    },
+    {
+      "id": "saki_honda",
+      "name": "本多 咲希",
+      "age": 24,
+      "occupation": "大学院生",
+      "organization": "京浜大学",
+      "location": "川崎",
+      "tags": [
+        "student",
+        "ai",
+        "research"
+      ],
+      "community": "Academia",
+      "influenceScore": 58
+    },
+    {
+      "id": "takayuki_kamiya",
+      "name": "神谷 隆之",
+      "age": 39,
+      "occupation": "経営企画",
+      "organization": "Mirai Mobility",
+      "location": "東京",
+      "tags": [
+        "strategy",
+        "mobility",
+        "enterprise"
+      ],
+      "community": "Enterprise",
+      "influenceScore": 70
+    },
+    {
+      "id": "sumire_tono",
+      "name": "遠野 すみれ",
+      "age": 28,
+      "occupation": "プロダクトマーケター",
+      "organization": "Mirai Mobility",
+      "location": "横浜",
+      "tags": [
+        "marketing",
+        "b2b",
+        "launch"
+      ],
+      "community": "Enterprise",
+      "influenceScore": 67
+    }
+  ],
+  "relationships": [
+    {
+      "id": "R001",
+      "source": "rena_asakura",
+      "target": "yuto_morimoto",
+      "type": "coworker",
+      "strength": 5,
+      "status": "active",
+      "sinceYear": 2021,
+      "context": "同じプロダクトチームで協業",
+      "isBidirectional": true
+    },
+    {
+      "id": "R002",
+      "source": "rena_asakura",
+      "target": "mitsuki_shiraishi",
+      "type": "coworker",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "新規サービスの立ち上げ",
+      "isBidirectional": true
+    },
+    {
+      "id": "R003",
+      "source": "rena_asakura",
+      "target": "kaito_tanabe",
+      "type": "coworker",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2021,
+      "context": "営業戦略と開発計画で連携",
+      "isBidirectional": true
+    },
+    {
+      "id": "R004",
+      "source": "rena_asakura",
+      "target": "kei_kuroda",
+      "type": "investor",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "出資後の定例メンタリング",
+      "isBidirectional": true
+    },
+    {
+      "id": "R005",
+      "source": "rena_asakura",
+      "target": "azusa_saionji",
+      "type": "advisor",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "広報戦略の相談先",
+      "isBidirectional": true
+    },
+    {
+      "id": "R006",
+      "source": "yuto_morimoto",
+      "target": "shuji_aoyama",
+      "type": "researchPartner",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "共同研究プロジェクト",
+      "isBidirectional": true
+    },
+    {
+      "id": "R007",
+      "source": "shuji_aoyama",
+      "target": "saki_honda",
+      "type": "mentor",
+      "strength": 5,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "研究指導教員",
+      "isBidirectional": false
+    },
+    {
+      "id": "R008",
+      "source": "yuto_morimoto",
+      "target": "saki_honda",
+      "type": "mentor",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "インターン受け入れ",
+      "isBidirectional": false
+    },
+    {
+      "id": "R009",
+      "source": "kei_kuroda",
+      "target": "ren_ogasawara",
+      "type": "investorNetwork",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2019,
+      "context": "投資家コミュニティでの盟友",
+      "isBidirectional": true
+    },
+    {
+      "id": "R010",
+      "source": "ren_ogasawara",
+      "target": "mao_fujisaki",
+      "type": "investor",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "シード投資先",
+      "isBidirectional": true
+    },
+    {
+      "id": "R011",
+      "source": "mao_fujisaki",
+      "target": "natsumi_kawamura",
+      "type": "coworker",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "創業初期からのチームメイト",
+      "isBidirectional": true
+    },
+    {
+      "id": "R012",
+      "source": "mao_fujisaki",
+      "target": "tomoya_murase",
+      "type": "coworker",
+      "strength": 5,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "経営チームの共同創業者",
+      "isBidirectional": true
+    },
+    {
+      "id": "R013",
+      "source": "natsumi_kawamura",
+      "target": "tomoya_murase",
+      "type": "coworker",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "プロダクト開発で密接に協業",
+      "isBidirectional": true
+    },
+    {
+      "id": "R014",
+      "source": "mitsuki_shiraishi",
+      "target": "ryo_ishido",
+      "type": "creativePartner",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "ブランド動画制作で連携",
+      "isBidirectional": true
+    },
+    {
+      "id": "R015",
+      "source": "azusa_saionji",
+      "target": "hikari_yoshioka",
+      "type": "mediaConnection",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2021,
+      "context": "イベント取材を通じて交流",
+      "isBidirectional": true
+    },
+    {
+      "id": "R016",
+      "source": "hikari_yoshioka",
+      "target": "ao_takanashi",
+      "type": "communityPartner",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "地域イベントで取材協力",
+      "isBidirectional": true
+    },
+    {
+      "id": "R017",
+      "source": "ao_takanashi",
+      "target": "yui_ando",
+      "type": "coworker",
+      "strength": 5,
+      "status": "active",
+      "sinceYear": 2021,
+      "context": "NPO運営の中心メンバー",
+      "isBidirectional": true
+    },
+    {
+      "id": "R018",
+      "source": "yui_ando",
+      "target": "rena_asakura",
+      "type": "communityPartner",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "教育プログラムで連携",
+      "isBidirectional": true
+    },
+    {
+      "id": "R019",
+      "source": "naoto_sakakibara",
+      "target": "rena_asakura",
+      "type": "talentConnector",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "採用支援の窓口",
+      "isBidirectional": true
+    },
+    {
+      "id": "R020",
+      "source": "naoto_sakakibara",
+      "target": "tomoya_murase",
+      "type": "talentConnector",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "技術人材紹介",
+      "isBidirectional": true
+    },
+    {
+      "id": "R021",
+      "source": "kotone_hasegawa",
+      "target": "kei_kuroda",
+      "type": "advisor",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2020,
+      "context": "投資契約の法務相談",
+      "isBidirectional": true
+    },
+    {
+      "id": "R022",
+      "source": "kotone_hasegawa",
+      "target": "mao_fujisaki",
+      "type": "legalAdvisor",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "資金調達の法務支援",
+      "isBidirectional": true
+    },
+    {
+      "id": "R023",
+      "source": "takayuki_kamiya",
+      "target": "sumire_tono",
+      "type": "coworker",
+      "strength": 4,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "新規事業とGo-to-marketで協業",
+      "isBidirectional": true
+    },
+    {
+      "id": "R024",
+      "source": "takayuki_kamiya",
+      "target": "kaito_tanabe",
+      "type": "businessPartner",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "PoC提携の担当者同士",
+      "isBidirectional": true
+    },
+    {
+      "id": "R025",
+      "source": "sumire_tono",
+      "target": "azusa_saionji",
+      "type": "mediaConnection",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "製品発表会の広報連携",
+      "isBidirectional": true
+    },
+    {
+      "id": "R026",
+      "source": "kaito_tanabe",
+      "target": "ren_ogasawara",
+      "type": "fundraising",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "シリーズAの面談を担当",
+      "isBidirectional": true
+    },
+    {
+      "id": "R027",
+      "source": "yuto_morimoto",
+      "target": "tomoya_murase",
+      "type": "peer",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "CTOコミュニティで交流",
+      "isBidirectional": true
+    },
+    {
+      "id": "R028",
+      "source": "mitsuki_shiraishi",
+      "target": "natsumi_kawamura",
+      "type": "friend",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "デザイン勉強会で意気投合",
+      "isBidirectional": true
+    },
+    {
+      "id": "R029",
+      "source": "hikari_yoshioka",
+      "target": "ryo_ishido",
+      "type": "creativePartner",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "ドキュメンタリー制作で協力",
+      "isBidirectional": true
+    },
+    {
+      "id": "R030",
+      "source": "saki_honda",
+      "target": "mao_fujisaki",
+      "type": "fan",
+      "strength": 1,
+      "status": "active",
+      "sinceYear": 2025,
+      "context": "イベント登壇をきっかけに接点",
+      "isBidirectional": false
+    },
+    {
+      "id": "R031",
+      "source": "kei_kuroda",
+      "target": "takayuki_kamiya",
+      "type": "boardConnection",
+      "strength": 2,
+      "status": "inactive",
+      "sinceYear": 2021,
+      "context": "過去の事業提携で面識あり",
+      "isBidirectional": true
+    },
+    {
+      "id": "R032",
+      "source": "ao_takanashi",
+      "target": "naoto_sakakibara",
+      "type": "alumni",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2018,
+      "context": "同じ大学の卒業生",
+      "isBidirectional": true
+    },
+    {
+      "id": "R033",
+      "source": "azusa_saionji",
+      "target": "ren_ogasawara",
+      "type": "advisor",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2023,
+      "context": "投資先広報の相談相手",
+      "isBidirectional": true
+    },
+    {
+      "id": "R034",
+      "source": "shuji_aoyama",
+      "target": "yui_ando",
+      "type": "communityPartner",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2022,
+      "context": "教育連携プロジェクト",
+      "isBidirectional": true
+    },
+    {
+      "id": "R035",
+      "source": "sumire_tono",
+      "target": "rena_asakura",
+      "type": "peer",
+      "strength": 2,
+      "status": "active",
+      "sinceYear": 2025,
+      "context": "PM向け勉強会で知り合う",
+      "isBidirectional": true
+    },
+    {
+      "id": "R036",
+      "source": "kaito_tanabe",
+      "target": "mao_fujisaki",
+      "type": "businessPartner",
+      "strength": 3,
+      "status": "active",
+      "sinceYear": 2024,
+      "context": "共同提案で知り合った起業家同士",
+      "isBidirectional": true
+    }
+  ]
+}
