@@ -19,20 +19,79 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout frontend
         uses: actions/checkout@v6
+        with:
+          ref: main
+          path: variants/frontend
+
+      - name: Checkout frontend-v2
+        uses: actions/checkout@v6
+        with:
+          ref: frontend-2
+          path: variants/frontend-v2
+
+      - name: Checkout frontend-v3
+        uses: actions/checkout@v6
+        with:
+          ref: frontend-3
+          path: variants/frontend-v3
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: |
+            variants/frontend-v2/package-lock.json
+            variants/frontend-v3/package-lock.json
 
-      - name: Install dependencies
+      - name: Copy frontend
+        run: |
+          mkdir -p site
+          cp -R variants/frontend/frontend site/frontend
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Friend Root Deployments</title>
+            </head>
+            <body>
+              <main>
+                <h1>Friend Root Deployments</h1>
+                <ul>
+                  <li><a href="./frontend/">frontend</a></li>
+                  <li><a href="./frontend-v2/">frontend-v2</a></li>
+                  <li><a href="./frontend-v3/">frontend-v3</a></li>
+                </ul>
+              </main>
+            </body>
+          </html>
+          HTML
+
+      - name: Install frontend-v2 dependencies
         run: npm ci
+        working-directory: variants/frontend-v2
 
-      - name: Build
-        run: npm run build -- --base=/Friend_root/
+      - name: Build frontend-v2
+        run: npm run build -- --base=/Friend_root/frontend-v2/
+        working-directory: variants/frontend-v2
+
+      - name: Copy frontend-v2
+        run: cp -R variants/frontend-v2/dist site/frontend-v2
+
+      - name: Install frontend-v3 dependencies
+        run: npm ci
+        working-directory: variants/frontend-v3
+
+      - name: Build frontend-v3
+        run: npm run build -- --base=/Friend_root/frontend-v3/
+        working-directory: variants/frontend-v3
+
+      - name: Copy frontend-v3
+        run: cp -R variants/frontend-v3/dist site/frontend-v3
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
@@ -40,7 +99,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build
