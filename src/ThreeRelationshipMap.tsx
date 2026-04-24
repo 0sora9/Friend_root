@@ -74,7 +74,7 @@ export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
 
     const nodeMeshes = new Map<string, THREE.Mesh>();
     const nodePositions = new Map<string, THREE.Vector3>();
-    const edgeLines = new Map<string, THREE.Line>();
+    const edgeMeshes = new Map<string, THREE.Mesh>();
     const directByNode = new Map<string, Set<string>>();
     const directEdgesByNode = new Map<string, Set<string>>();
 
@@ -97,16 +97,19 @@ export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
       const to = nodePositions.get(edge.to);
       if (!from || !to) return;
 
-      const geometry = new THREE.BufferGeometry().setFromPoints([from, to]);
-      const material = new THREE.LineBasicMaterial({
+      const curve = new THREE.CatmullRomCurve3([from, to]);
+      const isHighlighted = graph.highlightedEdgeIds.has(edge.id);
+      const radius = (0.038 + edge.strength / 1500) * (isHighlighted ? 1.45 : 1);
+      const geometry = new THREE.TubeGeometry(curve, 12, radius, 10, false);
+      const material = new THREE.MeshBasicMaterial({
         color: edgeColors[edge.type],
         transparent: true,
-        opacity: graph.highlightedEdgeIds.has(edge.id) ? 0.94 : 0.34
+        opacity: isHighlighted ? 0.98 : 0.56
       });
-      const line = new THREE.Line(geometry, material);
-      line.userData.edgeId = edge.id;
-      edgeLines.set(edge.id, line);
-      scene.add(line);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.userData.edgeId = edge.id;
+      edgeMeshes.set(edge.id, mesh);
+      scene.add(mesh);
     });
 
     graph.nodes.forEach((node) => {
@@ -197,11 +200,11 @@ export function ThreeRelationshipMap({ graph, selection, onSelect }: Props) {
         material.transparent = !isDirect;
       });
 
-      edgeLines.forEach((line, id) => {
-        const material = line.material as THREE.LineBasicMaterial;
+      edgeMeshes.forEach((mesh, id) => {
+        const material = mesh.material as THREE.MeshBasicMaterial;
         const isPath = graph.highlightedEdgeIds.has(id);
         const isDirect = !selectedNodeId || directEdges.has(id);
-        material.opacity = selectedNodeId ? (isDirect ? 0.94 : 0.06) : isPath ? 0.95 : 0.28;
+        material.opacity = selectedNodeId ? (isDirect ? 0.98 : 0.12) : isPath ? 0.98 : 0.5;
       });
     }
 
