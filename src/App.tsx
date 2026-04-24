@@ -29,6 +29,7 @@ import {
   type RelationshipType,
   type SocialConnections
 } from "./lib/demoGraph";
+import { ThreeRelationshipMap } from "./ThreeRelationshipMap";
 
 type Selection =
   | { kind: "node"; id: string }
@@ -156,7 +157,7 @@ export default function App() {
             </div>
           </div>
 
-          <RelationshipMap graph={graph} nodeById={nodeById} selection={selection} onSelect={setSelection} />
+          <ThreeRelationshipMap graph={graph} selection={selection} onSelect={setSelection} />
         </section>
 
         <aside className="insight-panel">
@@ -234,88 +235,6 @@ function SocialConnectionCard({
       </span>
       <em>{active ? "Connected" : "Off"}</em>
     </button>
-  );
-}
-
-function RelationshipMap({
-  graph,
-  nodeById,
-  selection,
-  onSelect
-}: {
-  graph: ReturnType<typeof buildDemoRelationshipGraph>;
-  nodeById: Map<string, PersonNode>;
-  selection: Selection;
-  onSelect: (selection: Selection) => void;
-}) {
-  return (
-    <div className="graph-wrap">
-      <svg className="graph" viewBox="0 0 900 620" role="img" aria-label="関係マップ">
-        <defs>
-          <filter id="nodeShadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#0f172a" floodOpacity="0.14" />
-          </filter>
-        </defs>
-
-        {graph.edges.map((edge) => {
-          const from = nodeById.get(edge.from);
-          const to = nodeById.get(edge.to);
-          if (!from || !to) return null;
-          const theme = edgeTheme[edge.type];
-          const isHighlighted = graph.highlightedEdgeIds.has(edge.id);
-          const isSelected = selection.kind === "edge" && selection.id === edge.id;
-
-          return (
-            <g key={edge.id}>
-              <line
-                className={`graph-edge ${isHighlighted ? "is-highlighted" : ""} ${isSelected ? "is-selected" : ""}`}
-                x1={from.x}
-                y1={from.y}
-                x2={to.x}
-                y2={to.y}
-                stroke={theme.color}
-                strokeWidth={Math.max(2, edge.strength / 18)}
-              />
-              <line
-                className="svg-hit-area"
-                x1={from.x}
-                y1={from.y}
-                x2={to.x}
-                y2={to.y}
-                stroke="transparent"
-                strokeWidth="24"
-                role="button"
-                tabIndex={0}
-                aria-label={`${from.name} と ${to.name} の関係を見る`}
-                onClick={() => onSelect({ kind: "edge", id: edge.id })}
-              />
-            </g>
-          );
-        })}
-
-        {graph.nodes.map((node) => {
-          const isSelected = selection.kind === "node" && selection.id === node.id;
-          const isPath = graph.approachSuggestion.recommendedPath.includes(node.id);
-
-          return (
-            <g key={node.id} className={`graph-node graph-node-${node.type}`}>
-              <circle
-                className={`${isSelected ? "is-selected" : ""} ${isPath ? "is-path" : ""}`}
-                cx={node.x}
-                cy={node.y}
-                r={node.type === "target" || node.type === "self" ? 45 : 32}
-                role="button"
-                tabIndex={0}
-                aria-label={`${node.name} の詳細を見る`}
-                onClick={() => onSelect({ kind: "node", id: node.id })}
-              />
-              <text x={node.x} y={node.y + 5} textAnchor="middle">{node.name}</text>
-              <text className="node-subtitle" x={node.x} y={node.y + 52} textAnchor="middle">{node.community}</text>
-            </g>
-          );
-        })}
-      </svg>
-    </div>
   );
 }
 
