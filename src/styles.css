@@ -21,104 +21,6 @@ button {
   font: inherit;
 }
 
-.login-shell {
-  align-items: center;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.12), transparent 28%),
-    linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
-  display: grid;
-  min-height: 100vh;
-  padding: 24px;
-}
-
-.login-panel {
-  background: #ffffff;
-  border: 1px solid #dce3ef;
-  border-radius: 8px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
-  display: grid;
-  gap: 18px;
-  margin: 0 auto;
-  max-width: 460px;
-  padding: 28px;
-  width: 100%;
-}
-
-.login-panel h1 {
-  font-size: 1.8rem;
-  line-height: 1.15;
-  margin: 6px 0 10px;
-}
-
-.login-panel p {
-  color: #475467;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.social-login-row {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.social-login-row button,
-.login-form button,
-.ghost-button,
-.integration-card {
-  align-items: center;
-  border: 1px solid #d7dfeb;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  font-weight: 800;
-  gap: 8px;
-  justify-content: center;
-  min-height: 42px;
-  padding: 10px 12px;
-}
-
-.social-login-row button,
-.ghost-button,
-.integration-card {
-  background: #ffffff;
-  color: #172033;
-}
-
-.login-form {
-  display: grid;
-  gap: 12px;
-}
-
-.login-form label {
-  color: #344054;
-  display: grid;
-  font-size: 0.82rem;
-  font-weight: 800;
-  gap: 6px;
-}
-
-.login-form input {
-  border: 1px solid #d7dfeb;
-  border-radius: 8px;
-  font: inherit;
-  min-height: 42px;
-  padding: 9px 11px;
-}
-
-.login-form button {
-  background: #172033;
-  color: #ffffff;
-}
-
-.login-error {
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-  border-radius: 8px;
-  color: #be123c !important;
-  padding: 9px 11px;
-}
-
 .app-shell {
   min-height: 100vh;
   padding: 22px;
@@ -137,13 +39,6 @@ button {
   font-size: clamp(1.3rem, 2vw, 2rem);
   line-height: 1.2;
   margin: 4px 0 0;
-}
-
-.topbar-actions {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 10px;
 }
 
 .eyebrow {
@@ -167,49 +62,6 @@ button {
   min-height: 44px;
   padding: 0 14px;
   white-space: nowrap;
-}
-
-.ghost-button {
-  white-space: nowrap;
-}
-
-.integration-strip {
-  align-items: stretch;
-  display: grid;
-  gap: 10px;
-  grid-template-columns: minmax(180px, 1fr) repeat(2, minmax(220px, 270px));
-  margin: 0 auto 18px;
-  max-width: 1440px;
-}
-
-.integration-strip > div,
-.integration-card {
-  background: #ffffff;
-  border: 1px solid #dce3ef;
-  border-radius: 8px;
-  min-height: 62px;
-  padding: 12px 14px;
-}
-
-.integration-strip strong {
-  display: block;
-  margin-top: 3px;
-}
-
-.integration-card {
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.integration-card span {
-  color: #667085;
-  display: grid;
-  font-size: 0.78rem;
-  gap: 2px;
-}
-
-.integration-card.is-connected svg {
-  color: #0f766e;
 }
 
 .workspace {
@@ -326,19 +178,15 @@ button {
 
 .graph-node text {
   fill: #182230;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   pointer-events: none;
 }
 
 .graph-node .node-subtitle {
   fill: #667085;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 650;
-}
-
-.graph-node .node-label-muted {
-  opacity: 0;
 }
 
 .graph-node-self circle {
@@ -605,7 +453,6 @@ button {
 }
 
 @media (max-width: 1050px) {
-  .integration-strip,
   .workspace {
     grid-template-columns: 1fr;
   }
@@ -631,14 +478,9 @@ button {
   }
 
   .topbar,
-  .topbar-actions,
   .panel-heading {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .social-login-row {
-    grid-template-columns: 1fr;
   }
 
   .search-box {

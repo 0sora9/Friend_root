@@ -117,6 +117,7 @@ const visibleIds = new Set<string>([
 ]);
 
 for (const relationship of demoData.relationships) {
+  if (visibleIds.size >= 14) break;
   if (
     relationship.source === scenario.startingPersonId ||
     relationship.target === scenario.startingPersonId ||
@@ -131,7 +132,7 @@ for (const relationship of demoData.relationships) {
 for (const person of [...demoData.people].sort(
   (a, b) => b.influenceScore - a.influenceScore
 )) {
-  if (visibleIds.size >= 44) break;
+  if (visibleIds.size >= 16) break;
   visibleIds.add(person.id);
 }
 
@@ -224,21 +225,6 @@ export const demoStats = {
   visiblePeopleCount: nodes.length,
   visibleRelationshipCount: edges.length
 };
-
-export const socialIntegrations = [
-  {
-    provider: "LinkedIn",
-    status: "connected",
-    syncedPeople: demoData.people.filter((person) => person.community !== "Community").length
-  },
-  {
-    provider: "Facebook",
-    status: "connected",
-    syncedPeople: demoData.people.filter((person) =>
-      ["Community", "Startup", "Creative", "Media"].includes(person.community)
-    ).length
-  }
-] as const;
 
 function pairKey(a: string, b: string) {
   return [a, b].sort().join("__");
