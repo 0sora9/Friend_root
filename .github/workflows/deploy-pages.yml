@@ -37,6 +37,12 @@ jobs:
           ref: frontend-3
           path: variants/frontend-v3
 
+      - name: Checkout frontend-v4
+        uses: actions/checkout@v6
+        with:
+          ref: frontend-4
+          path: variants/frontend-v4
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -64,6 +70,7 @@ jobs:
                   <li><a href="./frontend/">frontend</a></li>
                   <li><a href="./frontend-v2/">frontend-v2</a></li>
                   <li><a href="./frontend-v3/">frontend-v3</a></li>
+                  <li><a href="./frontend-v4/">frontend-v4</a></li>
                 </ul>
               </main>
             </body>
@@ -75,7 +82,7 @@ jobs:
         working-directory: variants/frontend-v2
 
       - name: Build frontend-v2
-        run: pnpm build -- --base=/Friend_root/frontend-v2/
+        run: pnpm build --base=/Friend_root/frontend-v2/
         working-directory: variants/frontend-v2
 
       - name: Copy frontend-v2
@@ -86,11 +93,22 @@ jobs:
         working-directory: variants/frontend-v3
 
       - name: Build frontend-v3
-        run: pnpm build -- --base=/Friend_root/frontend-v3/
+        run: pnpm build --base=/Friend_root/frontend-v3/
         working-directory: variants/frontend-v3
 
       - name: Copy frontend-v3
         run: cp -R variants/frontend-v3/dist site/frontend-v3
+
+      - name: Install frontend-v4 dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: variants/frontend-v4
+
+      - name: Build frontend-v4
+        run: pnpm build --base=/Friend_root/frontend-v4/
+        working-directory: variants/frontend-v4
+
+      - name: Copy frontend-v4
+        run: cp -R variants/frontend-v4/dist site/frontend-v4
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
