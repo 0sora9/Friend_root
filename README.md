@@ -7,6 +7,7 @@ Relationship-map demo for finding the best introduction path to a target person.
 - A relationship map with people, companies, communities, and connection strength.
 - Target detail and edge evidence, updated by clicking nodes or edges.
 - AI-suggested approach strategy using fixed mock suggestions.
+- Demo login with fixed local credentials and mock LinkedIn/Facebook sign-in.
 - Dummy LinkedIn/Facebook/Google-style data only. No external API, login, database, or real AI call is used.
 
 ## Run Locally
@@ -17,6 +18,12 @@ pnpm dev
 ```
 
 Open `http://localhost:5173/`.
+
+Demo login:
+
+- Email: `demo@friendroot.local`
+- Password: `friend-root`
+- LinkedIn / Facebook buttons use local mock sign-in only.
 
 ## Build
 

@@ -1,3 +1,5 @@
+import demoDataJson from "../data/human_relationship_demo.json";
+
 export type NodeType = "self" | "contact" | "target" | "company" | "community";
 
 export type PersonNode = {
@@ -10,6 +12,10 @@ export type PersonNode = {
   y: number;
   source: "LinkedIn" | "Facebook" | "Google" | "Manual";
   summary: string;
+  community?: string;
+  influenceScore?: number;
+  tags?: string[];
+  isFeatured?: boolean;
 };
 
 export type RelationshipType =
@@ -40,208 +46,288 @@ export type ApproachSuggestion = {
   risks: string[];
 };
 
-export const nodes: PersonNode[] = [
-  {
-    id: "me",
-    name: "自分",
-    title: "事業開発",
-    company: "Independent",
-    type: "self",
-    x: 110,
-    y: 280,
-    source: "Manual",
-    summary: "新規事業とパートナー開拓を担当。紹介経由で意思決定者に接触したい。",
-  },
-  {
-    id: "tanaka",
-    name: "田中 美咲",
-    title: "Product Lead",
-    company: "Northstar Labs",
-    type: "contact",
-    x: 300,
-    y: 170,
-    source: "LinkedIn",
-    summary: "LinkedIn 1次接続。過去プロジェクトで協働し、紹介依頼に反応しやすい。",
-  },
-  {
-    id: "sato",
-    name: "佐藤 蓮",
-    title: "Partner Manager",
-    company: "Orbit Partners",
-    type: "contact",
-    x: 510,
-    y: 210,
-    source: "Google",
-    summary: "田中さんと直近イベントで同席。ターゲット企業への橋渡し役。",
-  },
-  {
-    id: "kato",
-    name: "加藤 葵",
-    title: "Community Organizer",
-    company: "Founders Table",
-    type: "contact",
-    x: 310,
-    y: 395,
-    source: "Facebook",
-    summary: "共通コミュニティで接点あり。広いネットワークを持つが直近接触は薄い。",
-  },
-  {
-    id: "yamamoto",
-    name: "山本 悠",
-    title: "VC Associate",
-    company: "SeedGate Capital",
-    type: "contact",
-    x: 555,
-    y: 415,
-    source: "LinkedIn",
-    summary: "投資家ネットワークに強い。ターゲットとの距離は近いが紹介文脈が弱い。",
-  },
-  {
-    id: "target",
-    name: "中村 俊",
-    title: "Head of Alliances",
-    company: "Aster AI",
-    type: "target",
-    x: 760,
-    y: 280,
-    source: "LinkedIn",
-    summary: "今回アプローチしたい相手。Aster AIの提携責任者で、事業連携の決裁に近い。",
-  },
-  {
-    id: "aster",
-    name: "Aster AI",
-    title: "Target company",
-    company: "Aster AI",
-    type: "company",
-    x: 760,
-    y: 105,
-    source: "LinkedIn",
-    summary: "ターゲット企業。AIワークフロー領域の成長企業。",
-  },
-  {
-    id: "founders",
-    name: "Founders Table",
-    title: "Community",
-    company: "Tokyo",
-    type: "community",
-    x: 520,
-    y: 545,
-    source: "Facebook",
-    summary: "創業者・事業開発担当者のコミュニティ。弱い接点の発見に使える。",
-  },
-];
-
-export const edges: RelationshipEdge[] = [
-  {
-    id: "me-tanaka",
-    from: "me",
-    to: "tanaka",
-    type: "Strong introducer",
-    strength: 92,
-    recency: "直近14日以内",
-    frequency: "月4回接触",
-    evidence: ["LinkedIn 1次接続", "過去に2案件で協働", "Google Calendarで3回同席"],
-  },
-  {
-    id: "tanaka-sato",
-    from: "tanaka",
-    to: "sato",
-    type: "Met recently",
-    strength: 78,
-    recency: "直近30日以内",
-    frequency: "イベント同席2回",
-    evidence: ["Facebook共通イベント", "Google Calendarで同席", "共通コミュニティで接点"],
-  },
-  {
-    id: "sato-target",
-    from: "sato",
-    to: "target",
-    type: "Worked together",
-    strength: 86,
-    recency: "直近45日以内",
-    frequency: "四半期に数回接触",
-    evidence: ["LinkedIn 1次接続", "過去に提携案件で協働", "メール往復12スレッド"],
-  },
-  {
-    id: "me-kato",
-    from: "me",
-    to: "kato",
-    type: "LinkedIn connection",
-    strength: 52,
-    recency: "90日以上前",
-    frequency: "年数回接触",
-    evidence: ["Facebook友達", "Founders Tableで接点", "最近の直接接触は少ない"],
-  },
-  {
-    id: "kato-yamamoto",
-    from: "kato",
-    to: "yamamoto",
-    type: "Met recently",
-    strength: 64,
-    recency: "直近60日以内",
-    frequency: "イベント同席3回",
-    evidence: ["Facebook共通イベント", "同一コミュニティ所属"],
-  },
-  {
-    id: "yamamoto-target",
-    from: "yamamoto",
-    to: "target",
-    type: "LinkedIn connection",
-    strength: 58,
-    recency: "不明",
-    frequency: "接触頻度低",
-    evidence: ["LinkedIn 1次接続", "共通投資先の接点"],
-  },
-  {
-    id: "target-aster",
-    from: "target",
-    to: "aster",
-    type: "Worked together",
-    strength: 95,
-    recency: "現在",
-    frequency: "所属",
-    evidence: ["LinkedInプロフィール", "会社役職情報"],
-  },
-  {
-    id: "kato-founders",
-    from: "kato",
-    to: "founders",
-    type: "Strong introducer",
-    strength: 88,
-    recency: "現在",
-    frequency: "運営メンバー",
-    evidence: ["Facebookコミュニティ管理者", "イベント主催者"],
-  },
-  {
-    id: "yamamoto-founders",
-    from: "yamamoto",
-    to: "founders",
-    type: "Met recently",
-    strength: 70,
-    recency: "直近30日以内",
-    frequency: "月1回参加",
-    evidence: ["イベント参加履歴", "共通コミュニティ"],
-  },
-];
-
-export const approachSuggestion: ApproachSuggestion = {
-  targetId: "target",
-  recommendedPath: ["me", "tanaka", "sato", "target"],
-  recommendedIntroducer: "田中 美咲",
-  score: 91,
-  whyThisPath: [
-    "自分と田中さんの関係が最も強く、紹介依頼への心理的ハードルが低い。",
-    "田中さんから佐藤さんへの接点が直近30日以内で、話題化しやすい。",
-    "佐藤さんは中村さんと提携案件で協働しており、事業連携の文脈で自然に接続できる。",
-  ],
-  introRequest:
-    "田中さん、Aster AIの中村さんに事業連携の相談をしたく、佐藤さん経由でお繋ぎいただける可能性があるか相談させてください。中村さんの提携領域に近い提案なので、まずは15分だけ壁打ちできる形が理想です。",
-  firstMessage:
-    "中村さん、突然のご連絡失礼します。佐藤さん経由でご紹介いただきました。Aster AIの提携領域に関連して、既存顧客の導入接点を広げられる可能性があり、短くご相談できればと思っています。",
-  risks: [
-    "田中さんから中村さんへ直接ではなく、佐藤さんを挟むため紹介依頼が2段階になる。",
-    "中村さんの直近優先テーマが不明なため、初回は売り込みではなく仮説相談に寄せる。",
-  ],
+type DemoPerson = {
+  id: string;
+  name: string;
+  occupation: string;
+  organization: string;
+  location: string;
+  tags: string[];
+  community: string;
+  influenceScore: number;
+  isFeatured: boolean;
+  shortBio: string;
 };
 
-export const highlightedEdgeIds = new Set(["me-tanaka", "tanaka-sato", "sato-target"]);
+type DemoRelationship = {
+  id: string;
+  source: string;
+  target: string;
+  type: string;
+  strength: number;
+  status: string;
+  sinceYear: number;
+  context: string;
+  isBidirectional: boolean;
+};
+
+type DemoData = {
+  meta: {
+    title: string;
+    peopleCount: number;
+    relationshipCount: number;
+    featuredPeople: string[];
+    demoScenarios: {
+      id: string;
+      title: string;
+      startingPersonId: string;
+      focusPersonId: string;
+    }[];
+  };
+  people: DemoPerson[];
+  relationships: DemoRelationship[];
+};
+
+const demoData = demoDataJson as DemoData;
+const scenario = demoData.meta.demoScenarios[0] ?? {
+  id: "default",
+  title: "紹介経路",
+  startingPersonId: demoData.people[0]?.id ?? "",
+  focusPersonId: demoData.people[1]?.id ?? ""
+};
+
+const peopleById = new Map(demoData.people.map((person) => [person.id, person]));
+const relationshipByPair = new Map(
+  demoData.relationships.map((relationship) => [
+    pairKey(relationship.source, relationship.target),
+    relationship
+  ])
+);
+
+const recommendedPath = findPath(
+  scenario.startingPersonId,
+  scenario.focusPersonId
+);
+
+const visibleIds = new Set<string>([
+  scenario.startingPersonId,
+  scenario.focusPersonId,
+  ...recommendedPath,
+  ...demoData.meta.featuredPeople
+]);
+
+for (const relationship of demoData.relationships) {
+  if (
+    relationship.source === scenario.startingPersonId ||
+    relationship.target === scenario.startingPersonId ||
+    relationship.source === scenario.focusPersonId ||
+    relationship.target === scenario.focusPersonId
+  ) {
+    visibleIds.add(relationship.source);
+    visibleIds.add(relationship.target);
+  }
+}
+
+for (const person of [...demoData.people].sort(
+  (a, b) => b.influenceScore - a.influenceScore
+)) {
+  if (visibleIds.size >= 44) break;
+  visibleIds.add(person.id);
+}
+
+const visiblePeople = demoData.people.filter((person) => visibleIds.has(person.id));
+const communityIndexes = new Map<string, number>();
+
+export const nodes: PersonNode[] = visiblePeople.map((person) => {
+  const center = getCommunityCenter(person.community);
+  const index = communityIndexes.get(person.community) ?? 0;
+  communityIndexes.set(person.community, index + 1);
+  const angle = index * 1.72;
+  const ring = 42 + Math.floor(index / 4) * 34;
+  const isStart = person.id === scenario.startingPersonId;
+  const isTarget = person.id === scenario.focusPersonId;
+
+  return {
+    id: person.id,
+    name: person.name,
+    title: person.occupation,
+    company: person.organization,
+    type: isStart ? "self" : isTarget ? "target" : "contact",
+    x: Math.round(center.x + Math.cos(angle) * ring),
+    y: Math.round(center.y + Math.sin(angle) * ring),
+    source: socialSourceForCommunity(person.community),
+    summary: `${person.shortBio} ${person.location} / ${person.community} / influence ${person.influenceScore}`,
+    community: person.community,
+    influenceScore: person.influenceScore,
+    tags: person.tags,
+    isFeatured: person.isFeatured
+  };
+});
+
+const nodeIds = new Set(nodes.map((node) => node.id));
+
+export const edges: RelationshipEdge[] = demoData.relationships
+  .filter((relationship) => nodeIds.has(relationship.source) && nodeIds.has(relationship.target))
+  .map((relationship) => ({
+    id: relationship.id,
+    from: relationship.source,
+    to: relationship.target,
+    type: mapRelationshipType(relationship.type),
+    strength: relationship.strength * 20,
+    recency: `${relationship.sinceYear}年から`,
+    frequency: relationship.isBidirectional ? "双方向の接点" : "一方向の接点",
+    evidence: [
+      relationship.context,
+      `${relationship.sinceYear}年から継続`,
+      `${sourceLabelForRelationship(relationship.type)} mock sync`,
+      `strength ${relationship.strength}/5`
+    ]
+  }));
+
+export const highlightedEdgeIds = new Set(
+  recommendedPath
+    .slice(0, -1)
+    .map((id, index) => {
+      const next = recommendedPath[index + 1];
+      return next ? relationshipByPair.get(pairKey(id, next))?.id : undefined;
+    })
+    .filter((id): id is string => Boolean(id))
+);
+
+const introducerId = recommendedPath[1] ?? scenario.startingPersonId;
+const targetPerson = peopleById.get(scenario.focusPersonId);
+const introducer = peopleById.get(introducerId);
+
+export const approachSuggestion: ApproachSuggestion = {
+  targetId: scenario.focusPersonId,
+  recommendedPath,
+  recommendedIntroducer: introducer?.name ?? introducerId,
+  score: Math.max(55, Math.round(pathStrength(recommendedPath) * 20)),
+  whyThisPath: [
+    `${scenario.title} のデモシナリオに沿った紹介経路です。`,
+    `${introducer?.name ?? "紹介者"} は ${introducer?.community ?? "network"} 側の接点として使いやすい人物です。`,
+    `${targetPerson?.name ?? "ターゲット"} までの関係は LinkedIn / Facebook のモック連携データから生成しています。`
+  ],
+  introRequest: `${introducer?.name ?? "紹介者"}さん、${targetPerson?.name ?? "ターゲット"}さんにお話ししたく、関係性の近い方経由で短くご紹介いただけないでしょうか。`,
+  firstMessage: `${targetPerson?.name ?? "ターゲット"}さん、突然のご連絡失礼します。共通の接点からご紹介いただき、事業連携の可能性について15分ほどご相談できればと思っています。`,
+  risks: [
+    "データはデモ用のため、実際のLinkedIn/Facebook APIとは同期していません。",
+    "紹介前に直近の接触状況を本人へ確認する前提です。"
+  ]
+};
+
+export const demoStats = {
+  title: demoData.meta.title,
+  scenarioTitle: scenario.title,
+  peopleCount: demoData.meta.peopleCount,
+  relationshipCount: demoData.meta.relationshipCount,
+  visiblePeopleCount: nodes.length,
+  visibleRelationshipCount: edges.length
+};
+
+export const socialIntegrations = [
+  {
+    provider: "LinkedIn",
+    status: "connected",
+    syncedPeople: demoData.people.filter((person) => person.community !== "Community").length
+  },
+  {
+    provider: "Facebook",
+    status: "connected",
+    syncedPeople: demoData.people.filter((person) =>
+      ["Community", "Startup", "Creative", "Media"].includes(person.community)
+    ).length
+  }
+] as const;
+
+function pairKey(a: string, b: string) {
+  return [a, b].sort().join("__");
+}
+
+function socialSourceForCommunity(
+  community: string
+): PersonNode["source"] {
+  if (["Community", "Startup", "Creative", "Media"].includes(community)) {
+    return "Facebook";
+  }
+  return "LinkedIn";
+}
+
+function sourceLabelForRelationship(type: string) {
+  return mapRelationshipType(type).includes("LinkedIn") ? "LinkedIn" : "Facebook/LinkedIn";
+}
+
+function mapRelationshipType(type: string): RelationshipType {
+  if (
+    ["coworker", "businessPartner", "projectPeer", "researchPartner", "creativePartner"].includes(type)
+  ) {
+    return "Worked together";
+  }
+  if (
+    ["mentor", "advisor", "investor", "investorNetwork", "fundraising", "boardConnection", "talentConnector"].includes(type)
+  ) {
+    return "Strong introducer";
+  }
+  if (
+    ["friend", "peer", "communityPartner", "founderCircle", "alumni", "fan"].includes(type)
+  ) {
+    return "Met recently";
+  }
+  return "LinkedIn connection";
+}
+
+function getCommunityCenter(community: string) {
+  const centers: Record<string, { x: number; y: number }> = {
+    Tech: { x: 210, y: 210 },
+    Finance: { x: 705, y: 210 },
+    Media: { x: 470, y: 130 },
+    Startup: { x: 285, y: 430 },
+    Academia: { x: 645, y: 455 },
+    Community: { x: 470, y: 520 },
+    Business: { x: 805, y: 380 },
+    Creative: { x: 140, y: 470 },
+    Enterprise: { x: 755, y: 545 }
+  };
+  return centers[community] ?? { x: 450, y: 310 };
+}
+
+function findPath(startId: string, targetId: string) {
+  const adjacency = new Map<string, DemoRelationship[]>();
+  for (const relationship of demoData.relationships.filter((item) => item.status === "active")) {
+    adjacency.set(relationship.source, [...(adjacency.get(relationship.source) ?? []), relationship]);
+    adjacency.set(relationship.target, [...(adjacency.get(relationship.target) ?? []), relationship]);
+  }
+
+  const queue: string[][] = [[startId]];
+  const visited = new Set([startId]);
+
+  while (queue.length) {
+    const path = queue.shift()!;
+    const current = path.at(-1)!;
+    if (current === targetId) return path;
+    if (path.length >= 5) continue;
+
+    const nextRelationships = [...(adjacency.get(current) ?? [])].sort(
+      (a, b) => b.strength - a.strength
+    );
+
+    for (const relationship of nextRelationships) {
+      const next =
+        relationship.source === current ? relationship.target : relationship.source;
+      if (visited.has(next)) continue;
+      visited.add(next);
+      queue.push([...path, next]);
+    }
+  }
+
+  return [startId, targetId];
+}
+
+function pathStrength(path: string[]) {
+  const scores = path.slice(0, -1).map((id, index) => {
+    const next = path[index + 1];
+    return next ? relationshipByPair.get(pairKey(id, next))?.strength ?? 2 : 2;
+  });
+  if (!scores.length) return 3;
+  return scores.reduce((total, score) => total + score, 0) / scores.length;
+}
