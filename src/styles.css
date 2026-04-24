@@ -13,12 +13,328 @@
 }
 
 body {
+  background: #f5f7fb;
   margin: 0;
   min-width: 320px;
 }
 
 button {
   font: inherit;
+}
+
+input {
+  font: inherit;
+}
+
+.login-shell {
+  align-items: center;
+  background:
+    radial-gradient(circle at top left, #dbeafe 0, transparent 30%),
+    radial-gradient(circle at bottom right, #dcfce7 0, transparent 26%),
+    #f5f7fb;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.login-panel {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 440px);
+  max-width: 1120px;
+  width: 100%;
+}
+
+.integration-panel {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+  max-width: 1120px;
+  width: 100%;
+}
+
+.login-copy,
+.login-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #dce3ef;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.login-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 560px;
+  padding: 40px;
+}
+
+.integration-copy {
+  min-height: 520px;
+}
+
+.login-copy h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  margin: 8px 0 16px;
+}
+
+.login-copy p:not(.eyebrow) {
+  color: #475467;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 54ch;
+}
+
+.login-feature-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.login-feature-list div {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e6ebf2;
+  border-radius: 8px;
+  color: #344054;
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.login-feature-list svg {
+  color: #2563eb;
+  flex: 0 0 auto;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  padding: 28px;
+}
+
+.integration-card {
+  justify-content: flex-start;
+}
+
+.demo-account-list {
+  display: grid;
+  gap: 10px;
+}
+
+.demo-account-button {
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1px solid #dce3ef;
+  border-radius: 8px;
+  color: #172033;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.demo-account-button strong {
+  font-size: 0.92rem;
+}
+
+.demo-account-button span {
+  color: #667085;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.demo-account-button:hover {
+  border-color: #94a3b8;
+}
+
+.form-field {
+  color: #344054;
+  display: grid;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.form-field input {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #172033;
+  min-height: 46px;
+  outline: none;
+  padding: 0 14px;
+}
+
+.form-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-error {
+  color: #b42318;
+  font-size: 0.84rem;
+  font-weight: 700;
+  margin: -4px 0 0;
+}
+
+.primary-button,
+.ghost-action {
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 8px;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 14px;
+}
+
+.primary-button {
+  background: #172033;
+  border: 1px solid #172033;
+  color: #ffffff;
+}
+
+.primary-button:hover {
+  background: #0f172a;
+}
+
+.session-header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.integration-caption {
+  color: #667085;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
+
+.integration-list {
+  display: grid;
+  gap: 12px;
+}
+
+.integration-item {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e6ebf2;
+  border-radius: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.integration-meta {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.integration-meta strong {
+  color: #172033;
+  display: block;
+  font-size: 0.95rem;
+}
+
+.integration-meta p {
+  color: #667085;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin: 4px 0 0;
+}
+
+.integration-icon {
+  align-items: center;
+  background: #eef4ff;
+  border: 1px solid #c7d7fe;
+  border-radius: 8px;
+  color: #2563eb;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.toggle-button {
+  background: #cbd5e1;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 3px;
+  position: relative;
+  transition: background-color 160ms ease;
+  width: 56px;
+}
+
+.toggle-button.is-on {
+  background: #2563eb;
+}
+
+.toggle-knob {
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.24);
+  display: block;
+  height: 24px;
+  transform: translateX(0);
+  transition: transform 160ms ease;
+  width: 24px;
+}
+
+.toggle-button.is-on .toggle-knob {
+  transform: translateX(26px);
+}
+
+.integration-summary {
+  background: #f8fafc;
+  border: 1px solid #e6ebf2;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.integration-summary strong {
+  color: #172033;
+  display: block;
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+.session-box {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.session-box strong {
+  color: #172033;
+  display: block;
+  font-size: 0.94rem;
+  margin-top: 2px;
+}
+
+.ghost-action {
+  background: #ffffff;
+  border: 1px solid #dce3ef;
+  color: #344054;
+  flex: 0 0 auto;
 }
 
 .app-shell {
@@ -453,6 +769,18 @@ button {
 }
 
 @media (max-width: 1050px) {
+  .login-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .integration-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .login-copy {
+    min-height: auto;
+  }
+
   .workspace {
     grid-template-columns: 1fr;
   }
@@ -473,12 +801,29 @@ button {
 }
 
 @media (max-width: 760px) {
+  .login-shell,
   .app-shell {
     padding: 14px;
   }
 
+  .login-copy,
+  .login-card {
+    padding: 20px;
+  }
+
+  .session-header,
+  .integration-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .topbar,
   .panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .session-box {
     align-items: stretch;
     flex-direction: column;
   }
