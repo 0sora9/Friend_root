@@ -41,10 +41,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: npm
-          cache-dependency-path: |
-            variants/frontend-v2/package-lock.json
-            variants/frontend-v3/package-lock.json
+
+      - name: Setup pnpm
+        run: npm install --global pnpm@10.33.0
 
       - name: Copy frontend
         run: |
@@ -72,22 +71,22 @@ jobs:
           HTML
 
       - name: Install frontend-v2 dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         working-directory: variants/frontend-v2
 
       - name: Build frontend-v2
-        run: npm run build -- --base=/Friend_root/frontend-v2/
+        run: pnpm build -- --base=/Friend_root/frontend-v2/
         working-directory: variants/frontend-v2
 
       - name: Copy frontend-v2
         run: cp -R variants/frontend-v2/dist site/frontend-v2
 
       - name: Install frontend-v3 dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         working-directory: variants/frontend-v3
 
       - name: Build frontend-v3
-        run: npm run build -- --base=/Friend_root/frontend-v3/
+        run: pnpm build -- --base=/Friend_root/frontend-v3/
         working-directory: variants/frontend-v3
 
       - name: Copy frontend-v3
