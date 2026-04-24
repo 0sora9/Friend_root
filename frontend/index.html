@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RelateScope | Network Demo</title>
+    <link rel="stylesheet" href="./styles.css?v=2" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <canvas id="graphCanvas" aria-label="人脈ネットワークグラフ"></canvas>
+      <div class="grid-plane" aria-hidden="true"></div>
+      <div class="boot-status" id="bootStatus">Loading graph...</div>
+
+      <header class="topbar">
+        <div class="brand" aria-label="RelateScope">
+          <span class="brand-mark"></span>
+          <span class="brand-name">RelateScope</span>
+          <span class="demo-pill">Live map</span>
+        </div>
+
+        <form class="search" id="searchForm" role="search">
+          <input
+            id="searchInput"
+            type="search"
+            autocomplete="off"
+            placeholder="人物を検索"
+            aria-label="人物を検索"
+          />
+        </form>
+
+        <button class="ghost-button" id="resetButton" type="button">Reset</button>
+      </header>
+
+      <button class="filter-tab" id="filterTab" type="button" aria-controls="filterTray" aria-expanded="false">
+        Filter
+      </button>
+      <div class="filter-hotspot" id="filterHotspot" aria-hidden="true"></div>
+
+      <section class="filter-tray" id="filterTray" aria-label="フィルター">
+        <div class="tray-head">
+          <div>
+            <p class="eyebrow">Filters</p>
+            <h1>Focus graph</h1>
+          </div>
+          <button class="pin-button" id="pinFilters" type="button" aria-pressed="false">Pin</button>
+        </div>
+
+        <div class="filter-group">
+          <p class="group-label">距離</p>
+          <label><span>1次</span><input type="checkbox" data-degree="1" checked /></label>
+          <label><span>2次</span><input type="checkbox" data-degree="2" checked /></label>
+          <label><span>3次</span><input type="checkbox" data-degree="3" checked /></label>
+        </div>
+
+        <div class="filter-group">
+          <p class="group-label">カテゴリ</p>
+          <div id="categoryFilters" class="category-list"></div>
+        </div>
+
+        <div class="filter-group compact">
+          <label for="strengthRange">
+            <span>関係強度</span>
+            <output id="strengthValue">0.20</output>
+          </label>
+          <input id="strengthRange" type="range" min="0" max="0.9" step="0.05" value="0.2" />
+        </div>
+
+        <div class="filter-group compact">
+          <label for="confidenceRange">
+            <span>信頼度</span>
+            <output id="confidenceValue">0.30</output>
+          </label>
+          <input id="confidenceRange" type="range" min="0" max="0.95" step="0.05" value="0.3" />
+        </div>
+      </section>
+
+      <aside class="inspector" id="inspector" aria-live="polite">
+        <button class="close-button" id="closeInspector" type="button" aria-label="詳細を閉じる">Close</button>
+        <p class="eyebrow">Selected</p>
+        <h2 id="personName">人物名</h2>
+        <p id="personTitle" class="person-title"></p>
+        <div class="metric-row">
+          <div>
+            <span class="metric-label">Influence</span>
+            <strong id="personInfluence">0</strong>
+          </div>
+          <div>
+            <span class="metric-label">Degree</span>
+            <strong id="personDegree">0</strong>
+          </div>
+        </div>
+        <div class="route-block">
+          <p class="group-label">紹介ルート</p>
+          <ol id="routeList"></ol>
+        </div>
+      </aside>
+
+      <div class="legend" aria-label="凡例">
+        <span><i class="line thick"></i>濃い関係</span>
+        <span><i class="line thin"></i>弱い関係</span>
+        <span><i class="dot key"></i>重要人物</span>
+      </div>
+
+      <div class="tooltip" id="tooltip" role="status"></div>
+    </main>
+
+    <script>
+      window.addEventListener("error", function (event) {
+        var bootStatus = document.getElementById("bootStatus");
+        if (!bootStatus) return;
+        bootStatus.className = "boot-status is-error";
+        bootStatus.textContent = "Graph error: " + (event.message || "unknown error");
+      });
+    </script>
+    <script src="./app.js?v=2"></script>
+  </body>
+</html>
